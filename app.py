@@ -61,7 +61,7 @@ atc_status = {
 }
 
 # Token
-TOKEN = "MTA5ODgyMjEzMTIwMDA0NTE0Ng.Gumn56.TClzRpANk45nGiFfmEIay_FAozfu4pJgHVgg3A"
+TOKEN = "PRIVATE CODE"
 
 # Intents and Bot
 intents = discord.Intents().all()
