@@ -6,7 +6,8 @@ Bot Bio:
 Developed by Ryan1 using Discord.PY.
 
 Join ATC 48 Now:
-https://discord.gg/asN973XmT6```
+https://discord.gg/asN973XmT6
+```
 
 Links:
 Main Discord: https://discord.gg/asN973XmT6
