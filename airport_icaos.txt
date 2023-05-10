@@ -1,0 +1,24 @@
+IBTH - Saint Barts
+IRFD - Rockford
+IRFDGR - Rockford Ground
+ITKO - Tokyo
+ITKOGR - Tokyo Ground
+IZOL - Izolirani
+IZOLGR - Izolirani Ground
+IPPH - Perth
+IPPHGR - Perth Ground
+IGRV - Grindavik
+IDCS - Saba
+ISCM - Scampton
+ISAU - Sauthamptona
+ISKP - Skopelos
+ITRC - Training Centre
+IBLT - Boltic Airfield
+IMLR - Mellor
+ILKL - Lukla Airport
+IJAF - Al Najaf
+IBAR - Barra Airport
+IHEN - Henstridge Airfield
+IPAP - Paphos Intl.
+ILAR - Larnaca Intl.
+ILARGR - Larnaca Ground

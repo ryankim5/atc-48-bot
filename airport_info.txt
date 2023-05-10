@@ -1,0 +1,52 @@
+[IBAR] Barra Airport
+Barra Information - 118.080
+Max Aircraft: DHC-6 Twin Otter
+Tower: True
+Runway(s): Sand
+
+[IHEN] Henstridge Airfield
+No Tower or ATIS Frequency
+Max Aircraft: DHC-6 Twin Otter
+Tower: False
+Runway(s): 17, 35
+
+[ILAR] Larnaca International
+Larnaca Tower - 121.200
+Larnaca Ground - 119.400
+Max Aircraft: Airbus A380
+Tower: True
+Runway(s): 6, 24
+
+[IPAP] Paphos International
+Paphos Tower - 119.900
+Paphos Ground - N/A
+Max Aircraft: Boeing 777
+Tower: True
+Runway(s): 17, 35
+
+[IGRV] Grindavik Airport
+Grindavik Tower - 118.300
+Grindavik Ground - N/A
+Max Aircraft: Boeing 777
+Tower: True
+Runway(s): 6, 24
+
+[IJAF] Al Najaf Airfield
+Al Najaf Tower - 119.100
+Al Najaf Ground - N/A
+Max Aircraft: Bombardier CRJ700
+Tower: False
+Runway(s): 7, 25
+
+[IZOL] Izolirani International
+Izolirani Tower - 118.700
+Izolirani Ground - 121.900
+Max Aircraft: Airbus A380
+Tower: True
+Runway(s): 10, 28
+
+[ISCM] RAF Scampton
+Al Najaf Tower - N/A
+Max Aircraft: SR71 Blackbird
+Tower: True
+Runway(s): 13, 31

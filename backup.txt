@@ -1,0 +1,91 @@
+async def application_button(interaction):
+    custom_id = interaction.data["custom_id"]
+    print("in")
+    cid = custom_id.split("|")
+    a = cid[0]  
+    user = interaction.message.server.get_member(int(a))
+    print(custom_id)
+    if cid[1] == "accept":
+        server = bot.get_guild(1091939198853980290)
+        role = server.get_role(1101524483900198922)
+        await user.add_roles(role)
+
+q_list = [
+    "What is your Roblox username?",
+    'Have you read both the Server Rules and Game Rules?',
+    ' Have you reviewed the guides?',
+    "How do you report someone for breaking the rules in ATC 48?",
+    "Do you ping Managers or other staff to report someone?",
+    "What does IFR stand for, and when is it used?",
+    "Can you land an A380 at Lukla? If not, explain why.",
+    "True or False? Flares can be used in ATC 48 on military jets.",
+    "At which aerodromes/airports can you land military jets at?",
+    "True or False? You must file a flight plan with the ATC 48 Bot for every journey.",
+    "Can emergencies happen while there is no ATC controller online?",
+    "Do you agree to use Push To Talk when needed?",
+    "Do you agree to follow all rules in ATC 48?",
+    "Do you agree to follow all instructions from staff in ATC 48?"
+]
+
+
+a_list = []
+
+async def app(interaction):
+    a_list = []
+    submit_channel = bot.get_channel(1099189565664809050)
+    channel = await interaction.user.create_dm()
+
+    def check(m):
+        return m.content is not None and m.channel == channel
+
+    for question in q_list:
+        await channel.send(question)
+        msg = await bot.wait_for('message', check=check)
+        a_list.append(msg.content)
+
+    submit_wait = True
+    while submit_wait:
+        await channel.send('End of questions - "submit" to finish')
+        msg = await bot.wait_for('message', check=check)
+        if "submit" in msg.content.lower():
+            submit_wait = False
+            answers = "\n".join(f'{a}. {b}' for a, b in enumerate(a_list, 1))
+            view = discord.ui.View()
+            embed = discord.Embed(title=f"Application from {interaction.user.mention}", description=answers)
+            accept = discord.ui.Button(label="Accept", custom_id=f"{str(msg.author.id)}|accept", style=discord.ButtonStyle.primary)
+            decline = discord.ui.Button(label="Decline", custom_id=f"{str(msg.author.id)}|decline", style=discord.ButtonStyle.primary)
+            accept.callback = application_button
+            decline.callback = application_button
+            view.add_item(accept)
+            view.add_item(decline)
+            await submit_channel.send(embed=embed,view=view)
+
+
+# Welcome Message
+WELCOME_MESSAGE = """
+        <:smallairplane:1092001686031188018> Welcome to ATC 48! <:smallairplane:1092001686031188018>
+We have an always running Private Server of PTFS dedicated for semi-realistic ATC roleplay that runs 24/7, 365 days a year. Below is information you may find useful and instructions on how to join ATC 48.
+
+🚀 Our Mission: To ensure that anyone from anywhere in the world can engage in semi-realistic ATC roleplay. With only reasonable barriers and rules in place to safeguard operations from any bad actors.
+
+🛩️ Our Operations: We currently operate one Private Server, with the possibility of adding more in future to cater to demand. All the information you require to get started on your journey here can be found in the category below, with ⁠charts, a ⁠guides and a comprehensive list of ⁠game-rules for you to look at.
+
+How to join:
+In order to join the game and speak in any of the channels, you must follow these two steps:
+1. You must verify using Bloxlink in ⁠bot-commands. Type "/verify" and follow the instructions.
+2. You must pass the theory quiz. In order to attempt the quiz, you must be in the server for a minimum of one week. (7 days) The quiz contains questions that assess your knowledge of the rules, and how our operations run. In order to begin the quiz, click the blue button at the bottom of this message.
+Once both steps are completed, you will gain access to the game and the rest of the server through the @Members role.
+
+
+We hope this answered some of your questions, and hope you have a great time here,
+
+The entire <:smallairplane:1092001686031188018> ATC 48 team."""
+
+bot.command()
+async def sendwelcomemessage(ctx, passkey):
+    if passkey == "owercearu894urc4872uipacdsfk":
+        view = discord.ui.View()
+        button = discord.ui.Button(label="Join ATC 48", style=discord.ButtonStyle.primary)
+        view.add_item(button)
+        button.callback = app
+        await ctx.channel.send(embed = discord.Embed(title="**<:smallairplane:1092001686031188018> Welcome to ATC 48! <:smallairplane:1092001686031188018>**", description=WELCOME_MESSAGE), view=view)
