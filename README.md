@@ -9,5 +9,4 @@ Join ATC 48 Now:
 https://discord.gg/asN973XmT6
 ```
 
-Links:<b>
 Main Discord: https://discord.gg/asN973XmT6
