@@ -1,6 +1,31 @@
 import discord
 from discord.ext import commands
 
+AIRPORT_SELECT = [
+"[IGAR] Air Base Garry",
+"[IJAF] Al Najaf",
+"[IBAR] Barra Airport",
+"[IBLT] Boltic Airfield",
+"[IGRV] Grindavik Airport",
+"[IRFD] Greater Rockford",
+"[IHEN] Henstridge Airfield",
+"[HMS] HMS Queen Elizabeth II",
+"[IZOL] Izolirani Intl.",
+"[ILAR] Larnca Intl.",
+"[ILKL] Lukla Airport",
+"[IMLR] Mellor Intl.",
+"[IPAP] Paphos Intl.",
+"[IPPH] Perth Intl.",
+"[ISCM] RAF Scampton",
+"[IDCS] Saba Airport",
+"[IBTH] Saint Barthelemy",
+"[ISAU] Sauthamptona",
+"[ISKP] Skopelos Airfield",
+"[ITKO] Tokyo Intl.",
+"[ITRC] Training Centre",
+"[USS] USS Gerald R. Ford"
+]
+
 AIRPORT_NAMES = [
 "airbase_garry",
 "al_najaf",
@@ -60,8 +85,8 @@ atc_status = {
 "traning_centre" : [False, False],
 }
 
-# Token
-TOKEN = "PRIVATE CODE"
+# Token 
+TOKEN = "NONE"
 
 # Intents and Bot
 intents = discord.Intents().all()
@@ -92,23 +117,24 @@ async def on_message(message):
     await bot.process_commands(message)
 
 class ATCPanelView(discord.ui.View):
-    def __init__(self, embed, airport):
+    def __init__(self, embed, airport, dm):
         super().__init__()
         self.embed = embed
         self.airport = airport
+        self.dm = dm
 
     @discord.ui.button(label="Toggle ATC", style=discord.ButtonStyle.red)
     async def toggle_atc(self, interaction: discord.Interaction, button: discord.Button):
         global atc_status
         for key, value in atc_status.items():
             if value[0] == interaction.user.id:
-                atc_status[value][0] = False
-                for b in self.children:
-                    b.disabled = True
-                await interaction.response.send_message("Stopped ATC.")
-            if not value[0]:
+                atc_status[key][0] = False
+                self.children[0].disabled = True
+                self.children[1].disabled = True
+            elif value[0] == False:
                 atc_status[key] = [interaction.user.id, ""]
                 self.children[1].disabled = False
+        if value[0] == interaction.user.id: await self.dm.send("Stopped ATC.")
         await interaction.response.edit_message(view=self, embed=self.embed)
     
     @discord.ui.button(label="Change or Modify ATIS", style=discord.ButtonStyle.green, disabled=True)
@@ -126,7 +152,7 @@ class ATCPanelView(discord.ui.View):
 
 @bot.tree.command(name = "atc", description = "Request ATC.")
 async def atc(interaction: discord.Interaction, airport: str):
-    global atc_status
+    global atc_status   
     apt = airport.lower()
     if apt in AIRPORT_NAMES:
         status = atc_status[apt]
@@ -134,7 +160,7 @@ async def atc(interaction: discord.Interaction, airport: str):
             await interaction.response.send_message(f"Check Your DMs for Further Instructions. You are now ATC of the Airport {airport}.")
             dm = await interaction.user.create_dm()
             embed = discord.Embed(title="Welcome to ATC!!", description=f"Currently, you are the ATC of {airport}!\nPress the red button that says `TOGGLE ATC` to get started.\nAfter that, press `CHANGE ATIS` to change your ATIS, then press `SEND ATIS` to send the ATIS out to Atis-Information.\nHappy Controlling!")
-            view = ATCPanelView(embed=embed, airport=airport)
+            view = ATCPanelView(embed=embed, airport=airport, dm=dm)
             await dm.send(embed=embed, view=view)
         else:
             await interaction.response.send_message(f"There is already an active ATC for the Airport {airport}.")
@@ -157,7 +183,7 @@ async def flightplan_file(interaction: discord.Interaction):
     flight = f"""User: {interaction.user.mention}
 Callsign: {answers[0]}
 Aircraft: {answers[1]}
-VFR/IFR: {answer[2]}
+VFR/IFR: {answers[2]}
 Departure: {answers[3]}
 Arrival: {answers[4]}
 Route: {answers[5]}
